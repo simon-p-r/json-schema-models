@@ -331,39 +331,39 @@ describe('Manager', function () {
         });
     });
 
-    // it('should return an error if buildIndexes is unsuccesful with mongo', function (done) {
-    //
-    //     var schema = new Schema({});
-    //     var manager = new Manager({
-    //         name: 'test_db',
-    //         url: 'mongodb://localhost:27017',
-    //         options: {
-    //
-    //         }
-    //     });
-    //
-    //     schema.addSchemas(Schemas);
-    //     schema.compile();
-    //     manager.start(schema, function (err, result) {
-    //
-    //         expect(err).not.to.exist();
-    //         manager.models.example.indexes = [{
-    //             key: {
-    //                 test: 1
-    //             },
-    //             name: 'sid',
-    //             unique: false,
-    //             background: true,
-    //             w: 1
-    //         }];
-    //         manager.buildIndexes(function (err, rec) {
-    //
-    //             expect(err).to.exist();
-    //             expect(rec).to.not.exist();
-    //             manager.stop();
-    //             done();
-    //         });
-    //     });
-    // });
+    it('should return an error if buildIndexes is unsuccesful with mongo', function (done) {
+
+        var schema = new Schema({});
+        var manager = new Manager({
+            name: 'test_db',
+            url: 'mongodb://localhost:27017',
+            options: {
+
+            }
+        });
+
+        schema.addSchemas(Schemas);
+        schema.compile();
+        manager.start(schema, function (err, result) {
+
+            expect(err).not.to.exist();
+            manager.models.example.indexes = [{
+                key: {
+                    test: 1
+                },
+                name: 'sid',
+                unique: false,
+                background: true,
+                w: 1
+            }];
+            manager.buildIndexes(function (err, rec) {
+
+                expect(err).to.exist();
+                expect(rec).to.not.exist();
+                manager.stop();
+                done();
+            });
+        });
+    });
 
 });
