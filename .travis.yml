@@ -7,7 +7,12 @@ node_js:
   - 4.1
 
 sudo: false
-services: mongodb
+addons:
+  apt:
+    sources:
+      - mongodb-upstart
+    packages:
+      - mongodb-org-server
 
 before_script:
   - sleep 15
