@@ -41,7 +41,7 @@ options object must contain the following properties
 
 Intergrate with yasjv properly
 Add validation to model insert, insertMany and update methods
-Add lifecycle hooks that are defined in
-dropAllIndexes method
+Add lifecycle hooks for methods that are defined within defined schemas
+Intergrate dropAllIndexes method
 Handle multiple schema and database namespaces
-Switch to generators or async await instead of neo-async dependency 
+Switch to generators or async await instead of neo-async dependency
