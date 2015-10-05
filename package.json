@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "pretest": "mongo localhost:27017/test_db ./scripts/mongo.js",
-    "test": "lab -a code -v -t 100 -L"
+    "test": "lab -a code -v -t 95 -L"
   },
   "author": "simon-p-r <simon.ricaldone@circabs.com> (https://github.com/simon-p-r)",
   "license": "BSD-3-Clause",
