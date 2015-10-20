@@ -45,7 +45,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -85,7 +85,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -110,7 +110,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -136,7 +136,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -161,7 +161,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -192,7 +192,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -221,7 +221,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -251,7 +251,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -281,7 +281,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -310,7 +310,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -340,7 +340,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -369,7 +369,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -398,7 +398,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
@@ -427,7 +427,7 @@ describe('Manager', function () {
 
                 }
             },
-            yajsv: {
+            schema: {
                 formats: Formats
             },
             validator: Validator
