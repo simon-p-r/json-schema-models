@@ -4,25 +4,25 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'example collection',
-        type: 'collection',
+        description: 'invlaid defintion',
+        type: 'definition',
         jsonSchema: 'v4',
-        name: 'example',
+        name: 'def',
         version: 1
 
     },
     schema: {
 
-        id: 'example',
         type: 'object',
         additionalProperties: false,
         properties: {
 
-            iban: {
+            control: {
                 type: 'string',
+                format: 'unknown',
                 maxLength: 50
             }
         },
-        required: ['iban']
+        required: ['control']
     }
 };

@@ -2,18 +2,17 @@
 
 module.exports = {
 
-
     metaSchema: {
         description: 'example collection',
-        type: 'collection',
+        type: 'record',
+        base: 'example',
         jsonSchema: 'v4',
-        name: 'example',
+        name: 'invalid',
         version: 1
 
     },
     schema: {
 
-        id: 'example',
         type: 'object',
         additionalProperties: false,
         properties: {

@@ -4,17 +4,11 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'dummy collection',
+        description: 'invlaid defintion',
         type: 'record',
         jsonSchema: 'v4',
         name: 'rec',
-        version: 1,
-        keys: [{
-            name: 'sid',
-            flds: {
-                'tdid': 1
-            }
-        }]
+        version: 1
 
     },
     schema: {
@@ -23,12 +17,12 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            lookup: {
+            control: {
                 type: 'string',
+                '$ref.unknown': 'unknown',
                 maxLength: 50
-            },
-            '$ref.control': 'sample'
+            }
         },
-        required: ['lookup']
+        required: ['control']
     }
 };

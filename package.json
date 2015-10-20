@@ -1,11 +1,18 @@
 {
   "name": "json-schema-models",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
     "pretest": "mongo localhost:27017/test_db ./scripts/mongo.js",
     "test": "lab -a code -v -t 100 -L"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:simon-p-r/json-schema-models.git"
   },
   "author": "simon-p-r <simon.ricaldone@circabs.com> (https://github.com/simon-p-r)",
   "license": "BSD-3-Clause",
@@ -13,11 +20,12 @@
     "hoek": "2.x.x",
     "joi": "6.x.x",
     "mongodb": "2.x.x",
-    "neo-async": "1.x.x"
+    "neo-async": "1.x.x",
+    "yajsv": "^0.3.0"
   },
   "devDependencies": {
     "code": "1.x.x",
     "lab": "6.x.x",
-    "yajsv": "0.x.x"
+    "z-schema": "^3.15.3"
   }
 }

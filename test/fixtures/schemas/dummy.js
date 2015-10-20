@@ -1,11 +1,11 @@
-// Load modules
+'use strict';
 
 module.exports = {
 
 
     metaSchema: {
         description: 'dummy collection',
-        type: 'collection',
+        type: 'record',
         jsonSchema: 'v4',
         name: 'dummy',
         version: 1,

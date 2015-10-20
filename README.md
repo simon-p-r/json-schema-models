@@ -11,16 +11,20 @@ Internally modules use z-schema for json validation and mongodb native driver to
 ##### new jsonSchemaModels(options);
 
 options object must contain the following properties
-+ name - mongodb name
-+ url - mongodb url string (host and port)
-+ options - mongodb connection options
++ mongo
+   + name - mongodb name
+   + url - mongodb url string (host and port)
+   + options - mongodb connection options
 
-##### .start(yajsv, callback)
++ schema
+   + formats - an object with keys being name of format to register and value being the custom function to register for z-schema validation
++ validator - an object created by z-schema constructor function
+
+##### .start(callback)
 
 + method to validate the schemas
 
     ##### params
-    + yajsv object constructed by [yajsv](https://github.com/simon-p-r/yajsv) module, required for internal validation and defines what models to build
     + callback with error, result signature - error will show if any schemas have failed validation and result is an object containing the raw mognodb db handle from connection and an object containing handles to each model with keys beign name of model and value being the handle.
 
 ##### .stop(callback)
@@ -39,9 +43,9 @@ options object must contain the following properties
 
 ##### Todo
 
-Intergrate with yasjv properly
-Add validation to model insert, insertMany and update methods
-Add lifecycle hooks for methods that are defined within defined schemas
-Intergrate dropAllIndexes method
-Handle multiple schema and database namespaces
-Switch to generators or async await instead of neo-async dependency
++ Add json-schema validation to model insert, insertMany and update methods
++ Add lifecycle hooks for methods that are defined on schema definitions
++ Intergrate dropAllIndexes method
++ Handle multi-tenant database semantics
++ Switch to generators or async await instead of neo-async dependency
++ Add ability to use different datastores based on configuration
