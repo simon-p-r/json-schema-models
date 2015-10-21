@@ -39,7 +39,7 @@ options object must contain the following properties
 + method to build indexes based on schema definition
 
     ##### params
-    + callback with err, result signature
+    + callback with err signature
 
 ##### Todo
 

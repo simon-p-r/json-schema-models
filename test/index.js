@@ -151,6 +151,55 @@ describe('Manager', function () {
         });
     });
 
+    it('should return an error if no record schemas have been loaded by addSchemas method', function (done) {
+
+        var manager = new Manager({
+            mongo: {
+                name: 'test_db',
+                url: 'mongodb://localhost:27017',
+                options: {
+
+                }
+            },
+            schema: {
+                formats: Formats
+            },
+            validator: Validator
+        });
+
+        manager.start(function (err, result) {
+
+            expect(err).to.exist();
+            done();
+        });
+    });
+
+
+    it('should return an error if defintion sub-schemas are not vlaid with z-schema', function (done) {
+
+        var manager = new Manager({
+            mongo: {
+                name: 'test_db',
+                url: 'mongodb://localhost:27017',
+                options: {
+
+                }
+            },
+            schema: {
+                formats: Formats
+            },
+            validator: Validator
+        });
+
+        manager.schema.addSchemas(Schemas);
+        manager.schema.addSchemas([InvalidDef]);
+        manager.start(function (err, result) {
+
+            expect(err).to.exist();
+            done();
+        });
+    });
+
     it('should create settings object from options passed to constructor and connect to db', function (done) {
 
         var manager = new Manager({
@@ -408,10 +457,9 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.buildIndexes(function (err, rec) {
+            manager.buildIndexes(function (err) {
 
                 expect(err).to.not.exist();
-                expect(rec).to.be.exist();
                 manager.stop(done);
             });
         });
@@ -446,10 +494,9 @@ describe('Manager', function () {
                 background: true,
                 w: 1
             }];
-            manager.buildIndexes(function (err, rec) {
+            manager.buildIndexes(function (err) {
 
                 expect(err).to.exist();
-                expect(rec).to.not.exist();
                 manager.stop(done);
             });
         });
