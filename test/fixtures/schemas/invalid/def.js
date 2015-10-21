@@ -4,7 +4,7 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'invlaid defintion',
+        description: 'invalid defintion',
         type: 'definition',
         jsonSchema: 'v4',
         name: 'def',
