@@ -109,6 +109,7 @@ describe('Manager', function () {
 
     it('should return an error from start method when a record schema is not valid with z-schema', function (done) {
 
+        manager.schema.addSchemas(Schemas);
         manager.schema.addSchemas([InvalidRec]);
         manager.start(function (err, result) {
 

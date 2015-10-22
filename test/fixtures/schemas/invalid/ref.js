@@ -6,6 +6,7 @@ module.exports = {
     metaSchema: {
         description: 'invlaid defintion',
         type: 'record',
+        base: 'example',
         jsonSchema: 'v4',
         name: 'rec',
         version: 1

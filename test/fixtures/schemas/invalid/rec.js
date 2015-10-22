@@ -4,8 +4,9 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'invlaid defintion',
+        description: 'invalid record schema',
         type: 'record',
+        base: 'example',
         jsonSchema: 'v4',
         name: 'rec',
         version: 1
