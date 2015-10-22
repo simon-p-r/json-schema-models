@@ -145,11 +145,9 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            expect(result).to.be.an.object();
-            expect(result.db).to.exist();
-            expect(result.records).to.exist();
-            expect(result.records.rec).to.exist();
             expect(manager.db).to.exist();
+            expect(manager.records).to.exist();
+            expect(manager.records.dummyRec).to.exist();
             manager.stop(done);
 
         });
@@ -162,7 +160,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            result.records.rec.insertMany([Rec1, Rec2], {}, function (err, rec) {
+            manager.records.dummyRec.insertMany([Rec1, Rec2], {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -177,7 +175,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            result.records.rec.insertOne(Rec, {}, function (err, rec) {
+            manager.records.dummyRec.insertOne(Rec, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -193,7 +191,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            result.records.rec.count({}, {}, function (err, rec) {
+            manager.records.dummyRec.count({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.a.number();
@@ -209,7 +207,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            result.records.rec.find({}, function (err, rec) {
+            manager.records.dummyRec.find({}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.array();
@@ -224,8 +222,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            expect(result).to.be.an.object();
-            result.records.rec.findOne({ tdid: 'test' }, {}, function (err, rec) {
+            manager.records.dummyRec.findOne({ tdid: 'test' }, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -240,7 +237,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            result.records.rec.deleteMany({}, {}, function (err, rec) {
+            manager.records.dummyRec.deleteMany({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -255,7 +252,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            result.records.rec.deleteOne({}, {}, function (err, rec) {
+            manager.records.dummyRec.deleteOne({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -284,9 +281,9 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummy.indexes = [{
+            manager.records.dummyRec.indexes = [{
                 key: {
-                    test: 1
+                    test: 'a'
                 },
                 name: 'sid',
                 unique: false,

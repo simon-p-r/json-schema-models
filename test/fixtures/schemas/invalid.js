@@ -3,7 +3,7 @@
 module.exports = {
 
     metaSchema: {
-        description: 'example collection',
+        description: 'invalid record schema',
         type: 'record',
         base: 'example',
         jsonSchema: 'v4',

@@ -4,15 +4,16 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'dummy collection',
+        description: 'dummyRec record schema',
         type: 'record',
+        base: 'example',
         jsonSchema: 'v4',
-        name: 'rec',
+        name: 'dummyRec',
         version: 1,
         keys: [{
             name: 'sid',
             flds: {
-                'tdid': 1
+                'test': 1
             }
         }]
 
