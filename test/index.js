@@ -142,7 +142,6 @@ describe('Manager', function () {
     it('should create settings object from options passed to constructor and connect to db', function (done) {
 
         manager.schema.addSchemas(Schemas);
-
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
