@@ -1,10 +1,9 @@
 {
   "name": "json-schema-models",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
-    "pretest": "mongo localhost:27017/test_db ./scripts/mongo.js",
     "test": "lab -a code -v -t 100 -L"
   },
   "engines": {

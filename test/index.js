@@ -208,7 +208,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.find({}, function (err, rec) {
+            manager.records.dummyRec.find({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.array();

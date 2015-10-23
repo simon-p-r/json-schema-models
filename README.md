@@ -49,3 +49,5 @@ options object must contain the following properties
 + Handle multi-tenant database semantics
 + Switch to generators or async await instead of neo-async dependency
 + Add ability to use different datastores based on configuration
++ Add query pasrser for request.query from hapi
++ Argument checker for api rather than hardcoding incoming parameters to collection / record objects
