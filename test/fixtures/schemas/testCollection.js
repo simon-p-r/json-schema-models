@@ -4,10 +4,10 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'sample collection',
-        type: 'definition',
+        description: 'test collection',
+        type: 'collection',
         jsonSchema: 'v4',
-        name: 'sample',
+        name: 'test',
         version: 1
 
     },
@@ -17,11 +17,11 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            control: {
+            iban: {
                 type: 'string',
                 maxLength: 50
             }
         },
-        required: ['control']
+        required: ['iban']
     }
 };

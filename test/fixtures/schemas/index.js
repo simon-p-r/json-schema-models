@@ -1,15 +1,17 @@
 'use strict';
 
-var Dummy = require('./dummyRec.js');
-var Example = require('./example.js');
-var Invalid = require('./invalid.js');
-var Sample = require('./sample.js');
+var ExampleDef = require('./exampleDef.js');
+var ExampleRec = require('./exampleRec.js');
+var ExampleColl = require('./exampleCollection.js');
+var TestColl = require('./testCollection.js');
+var TestRec = require('./testRec.js');
 
 module.exports = [
 
-    Dummy,
-    Example,
-    Invalid,
-    Sample
+    ExampleDef,
+    ExampleRec,
+    ExampleColl,
+    TestColl,
+    TestRec
 
 ];

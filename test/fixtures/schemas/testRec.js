@@ -2,12 +2,13 @@
 
 module.exports = {
 
+
     metaSchema: {
-        description: 'invalid record schema',
+        description: 'test record schema',
         type: 'record',
         base: 'example',
         jsonSchema: 'v4',
-        name: 'invalid',
+        name: 'test',
         version: 1
 
     },
@@ -17,11 +18,12 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            iban: {
+            lookup: {
                 type: 'string',
                 maxLength: 50
-            }
+            },
+            '$ref.control': 'sample'
         },
-        required: ['iban']
+        required: ['lookup']
     }
 };

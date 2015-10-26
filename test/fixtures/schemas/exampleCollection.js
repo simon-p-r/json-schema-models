@@ -4,11 +4,10 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'dummyRec record schema',
-        type: 'record',
-        base: 'example',
+        description: 'example collection',
+        type: 'collection',
         jsonSchema: 'v4',
-        name: 'dummyRec',
+        name: 'example',
         version: 1,
         keys: [{
             name: 'sid',
@@ -24,12 +23,11 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            lookup: {
+            iban: {
                 type: 'string',
                 maxLength: 50
-            },
-            '$ref.control': 'sample'
+            }
         },
-        required: ['lookup']
+        required: ['iban']
     }
 };

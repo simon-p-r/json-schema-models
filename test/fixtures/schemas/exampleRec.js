@@ -4,12 +4,18 @@ module.exports = {
 
 
     metaSchema: {
-        description: 'invalid defintion',
+        description: 'example record schema',
         type: 'record',
         base: 'example',
         jsonSchema: 'v4',
-        name: 'rec',
-        version: 1
+        name: 'exampleRec',
+        version: 1,
+        keys: [{
+            name: 'sid',
+            flds: {
+                'test': 1
+            }
+        }]
 
     },
     schema: {
@@ -18,12 +24,12 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            control: {
+            lookup: {
                 type: 'string',
-                '$ref.unknown': 'unknown',
                 maxLength: 50
-            }
+            },
+            '$ref.control': 'sample'
         },
-        required: ['control']
+        required: ['lookup']
     }
 };

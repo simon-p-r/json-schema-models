@@ -47,7 +47,7 @@ options object must contain the following properties
 + Add lifecycle hooks for methods that are defined on schema definitions
 + Intergrate dropAllIndexes method
 + Handle multi-tenant database semantics
-+ Switch to generators or async await instead of neo-async dependency
-+ Add ability to use different datastores based on configuration
-+ Add query pasrser for request.query from hapi
++ Switch to promises, generators or async await instead of neo-async dependency
++ Add query parser for mongodb
 + Argument checker for api rather than hardcoding incoming parameters to collection / record objects
++ Add interface to models as well as low-level collection objects

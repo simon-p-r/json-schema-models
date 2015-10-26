@@ -10,6 +10,7 @@ var Formats = require('./fixtures/formats.js');
 var InvalidDef = require('./fixtures/schemas/invalid/def.js');
 var InvalidRec = require('./fixtures/schemas/invalid/rec.js');
 var InvalidRef = require('./fixtures/schemas/invalid/ref.js');
+var InvalidColl = require('./fixtures/schemas/invalid/coll.js');
 var Rec = require('./fixtures/data/rec.json');
 var Rec1 = require('./fixtures/data/rec1.json');
 var Rec2 = require('./fixtures/data/rec2.json');
@@ -140,6 +141,17 @@ describe('Manager', function () {
         });
     });
 
+    it('should return an error if collection schemas are not valid with z-schema', function (done) {
+
+        manager.schema.addSchemas(Schemas);
+        manager.schema.addSchemas([InvalidColl]);
+        manager.start(function (err, result) {
+
+            expect(err).to.exist();
+            done();
+        });
+    });
+
     it('should create settings object from options passed to constructor and connect to db', function (done) {
 
         manager.schema.addSchemas(Schemas);
@@ -147,21 +159,21 @@ describe('Manager', function () {
 
             expect(err).not.to.exist();
             expect(manager.db).to.exist();
-            expect(manager.records).to.exist();
-            expect(manager.records.dummyRec).to.exist();
+            expect(manager.collections).to.exist();
+            expect(manager.collections.example).to.exist();
             manager.stop(done);
 
         });
     });
 
 
-    it('should expose a insertMany method on collection entity', function (done) {
+    it('should expose a insertMany method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.insertMany([Rec1, Rec2], {}, function (err, rec) {
+            manager.collections.example.insertMany([Rec1, Rec2], {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -170,13 +182,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a insertOne method on collection entity', function (done) {
+    it('should expose a insertOne method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.insertOne(Rec, {}, function (err, rec) {
+            manager.collections.example.insertOne(Rec, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -186,13 +198,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a count method on collection entity', function (done) {
+    it('should expose a count method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.count({}, {}, function (err, rec) {
+            manager.collections.example.count({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.a.number();
@@ -202,13 +214,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a find method on collection entity', function (done) {
+    it('should expose a find method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.find({}, {}, function (err, rec) {
+            manager.collections.example.find({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.array();
@@ -217,13 +229,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a findOne method on collection entity', function (done) {
+    it('should expose a findOne method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.findOne({ tdid: 'test' }, {}, function (err, rec) {
+            manager.collections.example.findOne({ tdid: 'test' }, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -232,13 +244,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a deleteMany method on collection entity', function (done) {
+    it('should expose a deleteMany method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.deleteMany({}, {}, function (err, rec) {
+            manager.collections.example.deleteMany({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -247,13 +259,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a deleteOny method on collection entity', function (done) {
+    it('should expose a deleteOny method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.deleteOne({}, {}, function (err, rec) {
+            manager.collections.example.deleteOne({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -282,7 +294,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.records.dummyRec.indexes = [{
+            manager.collections.example.indexes = [{
                 key: {
                     test: 'a'
                 },
