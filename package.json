@@ -1,9 +1,10 @@
 {
   "name": "json-schema-models",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
+    "pretest": "mongo localhost:27017/test_db ./scripts/mongo.js",
     "test": "lab -a code -v -t 100 -L"
   },
   "engines": {
@@ -16,6 +17,7 @@
   "author": "simon-p-r <simon.ricaldone@circabs.com> (https://github.com/simon-p-r)",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "basic-utils": "0.0.1",
     "hoek": "2.x.x",
     "joi": "6.x.x",
     "mongodb": "2.x.x",

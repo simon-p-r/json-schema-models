@@ -214,6 +214,22 @@ describe('Manager', function () {
         });
     });
 
+    it('should expose a distinct method on model entity', function (done) {
+
+        manager.schema.addSchemas(Schemas);
+        manager.start(function (err, result) {
+
+            expect(err).not.to.exist();
+            manager.collections.example.distinct('test', {}, {}, function (err, rec) {
+
+                expect(err).to.not.exist();
+                expect(rec).to.be.an.array();
+                manager.stop();
+                done();
+            });
+        });
+    });
+
     it('should expose a find method on model entity', function (done) {
 
         manager.schema.addSchemas(Schemas);
@@ -235,7 +251,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.findOne({ tdid: 'test' }, {}, function (err, rec) {
+            manager.collections.example.findOne({ test: 'test' }, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -298,16 +314,41 @@ describe('Manager', function () {
                 key: {
                     test: 'a'
                 },
-                name: 'sid',
-                unique: false,
-                background: true,
-                w: 1
+                options: {
+                    name: 'sid',
+                    unique: false,
+                    background: true,
+                    w: 1
+                }
             }];
             manager.buildIndexes(function (err) {
 
                 expect(err).to.exist();
                 manager.stop(done);
             });
+        });
+    });
+
+    it('should expose a create sid method on collection object', function (done) {
+
+        manager.schema.addSchemas(Schemas);
+        manager.start(function (err, result) {
+
+            var payload = {
+                test: 'hello',
+                example: 'world',
+                control: {}
+            };
+            expect(err).not.to.exist();
+            var res = manager.collections.example.createSid(payload);
+            expect(res).to.be.an.object();
+            expect(res.control.sid).to.equal('hello::world');
+            delete payload.test;
+            var missingField = manager.collections.example.createSid(payload);
+            expect(missingField).to.be.undefined();
+            var noPayload = manager.collections.example.createSid();
+            expect(noPayload).to.be.undefined();
+            manager.stop(done);
         });
     });
 

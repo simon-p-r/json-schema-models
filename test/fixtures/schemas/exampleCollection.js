@@ -2,7 +2,6 @@
 
 module.exports = {
 
-
     metaSchema: {
         description: 'example collection',
         type: 'collection',
@@ -10,9 +9,15 @@ module.exports = {
         name: 'example',
         version: 1,
         keys: [{
-            name: 'sid',
+            name: 'test',
             flds: {
                 'test': 1
+            }
+        },
+        {
+            name: 'example',
+            flds: {
+                'example': 1
             }
         }]
 
@@ -23,11 +28,14 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            iban: {
+            test: {
                 type: 'string',
                 maxLength: 50
+            },
+            example: {
+                type: 'string'
             }
         },
-        required: ['iban']
+        required: ['test', 'example']
     }
 };
