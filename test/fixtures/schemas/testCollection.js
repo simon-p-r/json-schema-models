@@ -7,7 +7,7 @@ module.exports = {
         description: 'test collection',
         type: 'collection',
         jsonSchema: 'v4',
-        name: 'test',
+        name: 'testCollection',
         version: 1
 
     },

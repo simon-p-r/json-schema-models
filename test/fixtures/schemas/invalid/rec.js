@@ -6,7 +6,7 @@ module.exports = {
     metaSchema: {
         description: 'invalid record schema',
         type: 'record',
-        base: 'example',
+        base: 'exampleCollection',
         jsonSchema: 'v4',
         name: 'rec',
         version: 1
@@ -18,12 +18,12 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
-            control: {
+            invalid: {
                 type: 'string',
                 format: 'unknown',
                 maxLength: 50
             }
         },
-        required: ['control']
+        required: ['invalid']
     }
 };

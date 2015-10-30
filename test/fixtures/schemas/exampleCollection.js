@@ -6,7 +6,7 @@ module.exports = {
         description: 'example collection',
         type: 'collection',
         jsonSchema: 'v4',
-        name: 'example',
+        name: 'exampleCollection',
         version: 1,
         keys: [{
             name: 'test',
@@ -28,6 +28,9 @@ module.exports = {
         additionalProperties: false,
         properties: {
 
+            recType: {
+                type: 'string'
+            },
             test: {
                 type: 'string',
                 maxLength: 50
@@ -36,6 +39,24 @@ module.exports = {
                 type: 'string'
             }
         },
-        required: ['test', 'example']
+        required: ['recType', 'test', 'example']
+    },
+    methods: {
+        preValidate: function (payload) {
+
+            return payload;
+        },
+        postValidate: function (payload) {
+
+            return payload;
+        },
+        preSave: function (payload) {
+
+            return payload;
+        },
+        postSave: function (payload) {
+
+            return payload;
+        }
     }
 };

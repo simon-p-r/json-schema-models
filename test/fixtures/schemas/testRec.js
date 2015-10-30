@@ -6,9 +6,9 @@ module.exports = {
     metaSchema: {
         description: 'test record schema',
         type: 'record',
-        base: 'example',
+        base: 'testCollection',
         jsonSchema: 'v4',
-        name: 'test',
+        name: 'testRec',
         version: 1
 
     },
@@ -22,7 +22,7 @@ module.exports = {
                 type: 'string',
                 maxLength: 50
             },
-            '$ref.control': 'sample'
+            '$ref.control': 'exampleDef'
         },
         required: ['lookup']
     }

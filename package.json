@@ -1,6 +1,6 @@
 {
   "name": "json-schema-models",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "joi": "6.x.x",
     "mongodb": "2.x.x",
     "neo-async": "1.x.x",
-    "yajsv": "^0.3.3"
+    "yajsv": "^0.3.9"
   },
   "devDependencies": {
     "code": "1.x.x",

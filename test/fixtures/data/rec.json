@@ -1,4 +1,6 @@
 {
   "test": "first test",
-  "example": "first example"
+  "example": "first example",
+  "recType": "exampleRec",
+  "lookup": "someLookup"
 }

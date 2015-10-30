@@ -2,6 +2,7 @@
 
 var Code = require('code');
 var Lab = require('lab');
+var Hoek = require('hoek');
 var Manager = require('../lib/index.js');
 
 // Fixtures
@@ -108,6 +109,16 @@ describe('Manager', function () {
         });
     });
 
+
+    it('should return an error if no record schemas have been loaded by addSchemas method', function (done) {
+
+        manager.start(function (err, result) {
+
+            expect(err).to.exist();
+            done();
+        });
+    });
+
     it('should return an error from start method when a record schema is not valid with z-schema', function (done) {
 
         manager.schema.addSchemas(Schemas);
@@ -120,14 +131,6 @@ describe('Manager', function () {
         });
     });
 
-    it('should return an error if no record schemas have been loaded by addSchemas method', function (done) {
-
-        manager.start(function (err, result) {
-
-            expect(err).to.exist();
-            done();
-        });
-    });
 
 
     it('should return an error if defintion sub-schemas are not valid with z-schema', function (done) {
@@ -160,7 +163,7 @@ describe('Manager', function () {
             expect(err).not.to.exist();
             expect(manager.db).to.exist();
             expect(manager.collections).to.exist();
-            expect(manager.collections.example).to.exist();
+            expect(manager.collections.exampleCollection).to.exist();
             manager.stop(done);
 
         });
@@ -173,7 +176,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.insertMany([Rec1, Rec2], {}, function (err, rec) {
+            manager.collections.exampleCollection.insertMany([Rec1, Rec2], {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -182,29 +185,63 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a insertOne method on model entity', function (done) {
+    it('should expose a insertOne method on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.insertOne(Rec, {}, function (err, rec) {
+            manager.collections.exampleCollection.insertOne(Rec, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
-                manager.stop();
-                done();
+                delete Rec._id;
+                manager.stop(done);
             });
         });
     });
 
-    it('should expose a count method on model entity', function (done) {
+    it('should return an error when insertOne method fails due to no recType property on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.count({}, {}, function (err, rec) {
+            delete Rec.recType;
+            manager.collections.exampleCollection.insertOne(Rec, {}, function (err, rec) {
+
+                expect(err).to.exist();
+                expect(rec).to.not.exist();
+                manager.stop(done);
+            });
+        });
+    });
+
+    it('should return an error when insertOne method fails due to validation', function (done) {
+
+        manager.schema.addSchemas(Schemas);
+        manager.start(function (err, result) {
+
+            expect(err).not.to.exist();
+            var InvalidInsert = Hoek.clone(Rec);
+            InvalidInsert.recType = 'exampleRec';
+            InvalidInsert.control = {};
+            manager.collections.exampleCollection.insertOne(InvalidInsert, {}, function (err, rec) {
+
+                expect(err).to.exist();
+                expect(rec).to.not.exist();
+                manager.stop(done);
+            });
+        });
+    });
+
+    it('should expose a count method on collection object', function (done) {
+
+        manager.schema.addSchemas(Schemas);
+        manager.start(function (err, result) {
+
+            expect(err).not.to.exist();
+            manager.collections.exampleCollection.count({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.a.number();
@@ -214,13 +251,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a distinct method on model entity', function (done) {
+    it('should expose a distinct method on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.distinct('test', {}, {}, function (err, rec) {
+            manager.collections.exampleCollection.distinct('test', {}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.array();
@@ -230,13 +267,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a find method on model entity', function (done) {
+    it('should expose a find method on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.find({}, {}, function (err, rec) {
+            manager.collections.exampleCollection.find({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.array();
@@ -245,13 +282,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a findOne method on model entity', function (done) {
+    it('should expose a findOne method on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.findOne({ test: 'test' }, {}, function (err, rec) {
+            manager.collections.exampleCollection.findOne({ test: 'test' }, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -260,13 +297,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a deleteMany method on model entity', function (done) {
+    it('should expose a deleteMany method on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.deleteMany({}, {}, function (err, rec) {
+            manager.collections.exampleCollection.deleteMany({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -275,13 +312,13 @@ describe('Manager', function () {
         });
     });
 
-    it('should expose a deleteOny method on model entity', function (done) {
+    it('should expose a deleteOny method on collection object', function (done) {
 
         manager.schema.addSchemas(Schemas);
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.deleteOne({}, {}, function (err, rec) {
+            manager.collections.exampleCollection.deleteOne({}, {}, function (err, rec) {
 
                 expect(err).to.not.exist();
                 expect(rec).to.be.an.object();
@@ -310,7 +347,7 @@ describe('Manager', function () {
         manager.start(function (err, result) {
 
             expect(err).not.to.exist();
-            manager.collections.example.indexes = [{
+            manager.collections.exampleCollection.indexes = [{
                 key: {
                     test: 'a'
                 },
@@ -340,13 +377,13 @@ describe('Manager', function () {
                 control: {}
             };
             expect(err).not.to.exist();
-            var res = manager.collections.example.createSid(payload);
+            var res = manager.collections.exampleCollection.createSid(payload);
             expect(res).to.be.an.object();
             expect(res.control.sid).to.equal('hello::world');
             delete payload.test;
-            var missingField = manager.collections.example.createSid(payload);
+            var missingField = manager.collections.exampleCollection.createSid(payload);
             expect(missingField).to.be.undefined();
-            var noPayload = manager.collections.example.createSid();
+            var noPayload = manager.collections.exampleCollection.createSid();
             expect(noPayload).to.be.undefined();
             manager.stop(done);
         });

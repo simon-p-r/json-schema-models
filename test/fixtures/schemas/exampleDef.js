@@ -7,7 +7,7 @@ module.exports = {
         description: 'sample definition',
         type: 'definition',
         jsonSchema: 'v4',
-        name: 'sample',
+        name: 'exampleDef',
         version: 1
 
     },
