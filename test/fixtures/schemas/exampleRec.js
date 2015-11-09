@@ -6,7 +6,7 @@ module.exports = {
     metaSchema: {
         description: 'example record schema',
         type: 'record',
-        base: 'exampleCollection',
+        base: 'entity',
         jsonSchema: 'v4',
         name: 'exampleRec',
         version: 1,

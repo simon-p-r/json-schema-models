@@ -31,7 +31,7 @@ describe('Manager', () => {
 
         manager = new Manager({
             mongo: {
-                name: 'test_db',
+                name: 'wadofgum_db',
                 url: 'mongodb://localhost:27017',
                 options: {
 
