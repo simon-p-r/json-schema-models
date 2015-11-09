@@ -1,35 +1,33 @@
-// Load modules
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var Hoek = require('hoek');
-var Manager = require('../lib/index.js');
+const Code = require('code');
+const Lab = require('lab');
+const Hoek = require('hoek');
+const Manager = require('../lib/index.js');
 
 // Fixtures
-var Schemas = require('./fixtures/schemas/index.js');
-var Formats = require('./fixtures/formats.js');
-var InvalidDef = require('./fixtures/schemas/invalid/def.js');
-var InvalidRec = require('./fixtures/schemas/invalid/rec.js');
-var InvalidRef = require('./fixtures/schemas/invalid/ref.js');
-var InvalidColl = require('./fixtures/schemas/invalid/coll.js');
-var Rec = require('./fixtures/data/rec.json');
-var Rec1 = require('./fixtures/data/rec1.json');
-var Rec2 = require('./fixtures/data/rec2.json');
-var ZSchema = require('z-schema');
-var Validator = new ZSchema();
+const Collections = require('./fixtures/collections.js');
+const Schemas = require('./fixtures/schemas/index.js');
+const Formats = require('./fixtures/formats.js');
+const InvalidDef = require('./fixtures/schemas/invalid/def.js');
+const InvalidRec = require('./fixtures/schemas/invalid/rec.js');
+const InvalidRef = require('./fixtures/schemas/invalid/ref.js');
+const ZSchema = require('z-schema');
+const Validator = new ZSchema();
 
 // Set-up lab
-var lab = exports.lab = Lab.script();
-var describe = lab.describe;
-var it = lab.it;
-var expect = Code.expect;
-var beforeEach = lab.beforeEach;
+const lab = exports.lab = Lab.script();
+const describe = lab.describe;
+const it = lab.it;
+const expect = Code.expect;
+const afterEach = lab.afterEach;
+const beforeEach = lab.beforeEach;
 
-describe('Manager', function () {
+describe('Manager', () => {
 
-    var manager;
+    let manager;
 
-    beforeEach(function (done) {
+    beforeEach((done) => {
 
         manager = new Manager({
             mongo: {
@@ -37,7 +35,8 @@ describe('Manager', function () {
                 url: 'mongodb://localhost:27017',
                 options: {
 
-                }
+                },
+                collections: Collections
             },
             schema: {
                 formats: Formats
@@ -48,33 +47,41 @@ describe('Manager', function () {
         done();
     });
 
-    it('should throw an error when constructed without an options object', function (done) {
+    afterEach((done) => {
 
-        expect(function () {
+        manager = null;
+        done();
+    });
+
+
+    it('should throw an error when constructed without an options object', (done) => {
+
+        expect(() => {
 
             new Manager();
-        }).throws(Error, 'Datastore must be constructed with a valid options object');
+        }).throws(Error, 'JsonModels must be constructed with a valid options object');
         done();
 
     });
 
-    it('should return an error when opened against invalid port', function (done) {
+    it('should return an error when opened against invalid port', (done) => {
 
         manager.settings.mongo.url = 'mongodb://localhost:27018';
         manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).to.exist();
-            expect(result).to.not.exist();
+            expect(err.name).to.contain('MongoError');
+            expect(err.message).to.contain('connect ECONNREFUSED');
             done();
         });
 
     });
 
-    it('should throw an error when invalid options are passed to constructor', function (done) {
+    it('should throw an error when invalid options are passed to constructor', (done) => {
 
         manager.settings.mongo.url = 'mongodb://localhost:27017';
-        expect(function () {
+        expect(() => {
 
             new Manager({
                 url: 'mongodb://localhost:27017',
@@ -87,306 +94,151 @@ describe('Manager', function () {
 
     });
 
-    it('should return an error when a defintion schema is not valid with z-schema', function (done) {
+    it('should return an error when a defintion schema is not valid with z-schema', (done) => {
 
+        manager.schema.addSchemas(Schemas);
         manager.schema.addSchemas([InvalidDef]);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).to.exist();
+            expect(err.schemaName).to.contain('def');
             done();
 
         });
     });
 
-    it('should return an error from start method when a schema compile throws an error', function (done) {
+    it('should return an error from start method when a schema compile throws an error', (done) => {
 
         manager.schema.addSchemas([InvalidRef]);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).to.exist();
+            expect(err).to.be.instanceof(Error);
+            done();
+
+        });
+    });
+
+    it('should return an error from start method when a createCollections returns an error', (done) => {
+
+        const invalid = Hoek.clone(Collections);
+        invalid[0].name = null;
+        const datastore = new Manager({
+            mongo: {
+                name: 'test_db',
+                url: 'mongodb://localhost:27017',
+                options: {
+
+                },
+                collections: invalid
+            },
+            schema: {
+                formats: Formats
+            },
+            validator: Validator,
+            zSchema: ZSchema
+        });
+        datastore.schema.addSchemas(Schemas);
+        datastore.start((err, result) => {
+
+            expect(err).to.exist();
+            expect(err.code).to.equal(15888);
             done();
 
         });
     });
 
 
-    it('should return an error if no record schemas have been loaded by addSchemas method', function (done) {
+    it('should return an error if no record schemas have been loaded by addSchemas method', (done) => {
 
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).to.exist();
+            expect(err).to.contain('No record schemas loaded');
             done();
         });
     });
 
-    it('should return an error from start method when a record schema is not valid with z-schema', function (done) {
+    it('should return an error from start method when a record schema is not valid with z-schema', (done) => {
 
         manager.schema.addSchemas(Schemas);
         manager.schema.addSchemas([InvalidRec]);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).to.exist();
+            expect(err.schemaName).to.contain('rec');
             done();
-
         });
     });
 
-
-
-    it('should return an error if defintion sub-schemas are not valid with z-schema', function (done) {
+    it('should return an error if defintion sub-schemas are not valid with z-schema', (done) => {
 
         manager.schema.addSchemas(Schemas);
         manager.schema.addSchemas([InvalidDef]);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).to.exist();
+            expect(err.schemaName).to.contain('def');
             done();
         });
     });
 
-    it('should return an error if collection schemas are not valid with z-schema', function (done) {
+    it('should successfully start db and return collections, records and db objects', (done) => {
 
         manager.schema.addSchemas(Schemas);
-        manager.schema.addSchemas([InvalidColl]);
-        manager.start(function (err, result) {
-
-            expect(err).to.exist();
-            done();
-        });
-    });
-
-    it('should create settings object from options passed to constructor and connect to db', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).not.to.exist();
-            expect(manager.db).to.exist();
-            expect(manager.collections).to.exist();
-            expect(manager.collections.exampleCollection).to.exist();
+            expect(result.db).to.exist();
+            expect(result.records).to.exist();
+            expect(result.collections).to.exist();
+            expect(result.definitions).to.exist();
             manager.stop(done);
 
         });
     });
 
-
-    it('should expose a insertMany method on model entity', function (done) {
+    it('should clean up when stop method is called', (done) => {
 
         manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).not.to.exist();
-            manager.collections.exampleCollection.insertMany([Rec1, Rec2], {}, function (err, rec) {
+            manager.stop();
+            done();
+        });
+    });
+
+    it('should expose a buildIndexes method and successfully build indexes with mongodb', (done) => {
+
+        manager.schema.addSchemas(Schemas);
+        manager.start((err, result) => {
+
+            expect(err).not.to.exist();
+            manager.buildIndexes((err) => {
 
                 expect(err).to.not.exist();
-                expect(rec).to.be.an.object();
                 manager.stop(done);
             });
         });
     });
 
-    it('should expose a insertOne method on collection object', function (done) {
+    it('should return an error if buildIndexes is unsuccesful with mongo', (done) => {
 
+        const invalid = Hoek.clone(Collections);
+        invalid[1].indexes[2] = Collections[1].indexes[0];
+        invalid[1].indexes[2].options.unique = false;
+        manager.collections = invalid;
         manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
+        manager.start((err, result) => {
 
             expect(err).not.to.exist();
-            manager.collections.exampleCollection.insertOne(Rec, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.an.object();
-                delete Rec._id;
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should return an error when insertOne method fails due to no recType property on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            delete Rec.recType;
-            manager.collections.exampleCollection.insertOne(Rec, {}, function (err, rec) {
+            manager.buildIndexes((err) => {
 
                 expect(err).to.exist();
-                expect(rec).to.not.exist();
+                expect(err).to.contain('Cannot create collection indices');
                 manager.stop(done);
             });
         });
     });
-
-    it('should return an error when insertOne method fails due to validation', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            var InvalidInsert = Hoek.clone(Rec);
-            InvalidInsert.recType = 'exampleRec';
-            InvalidInsert.control = {};
-            manager.collections.exampleCollection.insertOne(InvalidInsert, {}, function (err, rec) {
-
-                expect(err).to.exist();
-                expect(rec).to.not.exist();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should expose a count method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.count({}, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.a.number();
-                manager.stop();
-                done();
-            });
-        });
-    });
-
-    it('should expose a distinct method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.distinct('test', {}, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.an.array();
-                manager.stop();
-                done();
-            });
-        });
-    });
-
-    it('should expose a find method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.find({}, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.an.array();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should expose a findOne method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.findOne({ test: 'test' }, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.an.object();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should expose a deleteMany method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.deleteMany({}, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.an.object();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should expose a deleteOny method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.deleteOne({}, {}, function (err, rec) {
-
-                expect(err).to.not.exist();
-                expect(rec).to.be.an.object();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should expose a buildIndexes method and successfully build indexes with mongodb', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.buildIndexes(function (err) {
-
-                expect(err).to.not.exist();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should return an error if buildIndexes is unsuccesful with mongo', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            expect(err).not.to.exist();
-            manager.collections.exampleCollection.indexes = [{
-                key: {
-                    test: 'a'
-                },
-                options: {
-                    name: 'sid',
-                    unique: false,
-                    background: true,
-                    w: 1
-                }
-            }];
-            manager.buildIndexes(function (err) {
-
-                expect(err).to.exist();
-                manager.stop(done);
-            });
-        });
-    });
-
-    it('should expose a create sid method on collection object', function (done) {
-
-        manager.schema.addSchemas(Schemas);
-        manager.start(function (err, result) {
-
-            var payload = {
-                test: 'hello',
-                example: 'world',
-                control: {}
-            };
-            expect(err).not.to.exist();
-            var res = manager.collections.exampleCollection.createSid(payload);
-            expect(res).to.be.an.object();
-            expect(res.control.sid).to.equal('hello::world');
-            delete payload.test;
-            var missingField = manager.collections.exampleCollection.createSid(payload);
-            expect(missingField).to.be.undefined();
-            var noPayload = manager.collections.exampleCollection.createSid();
-            expect(noPayload).to.be.undefined();
-            manager.stop(done);
-        });
-    });
-
 });

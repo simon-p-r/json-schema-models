@@ -15,6 +15,7 @@ options object must contain the following properties
    + name - mongodb name
    + url - mongodb url string (host and port)
    + options - mongodb connection options
+   + collections - an array of objects with name, indexes (for createIndexes method) and options properties to pass to mongodb createCollection method
 
 + schema
    + formats - an object with keys being name of format to register and value being the custom function to register for z-schema validation
@@ -25,7 +26,7 @@ options object must contain the following properties
 + method to validate the schemas
 
     ##### params
-    + callback with error, result signature - error will show if any schemas have failed validation and result is an object containing the raw mognodb db handle from connection and an object containing handles to each model with keys beign name of model and value being the handle.
+    + callback with error, result signature - error will show if any schemas have failed validation and result is an object containing the raw mognodb db handle from connection and an object containing handles to each model and each collection created.
 
 ##### .stop(callback)
 
@@ -43,11 +44,6 @@ options object must contain the following properties
 
 ##### Todo
 
-+ Add json-schema validation to model insert, insertMany and update methods
-+ Add lifecycle hooks for methods that are defined on schema definitions
 + Intergrate dropAllIndexes method
 + Handle multi-tenant database semantics
 + Switch to promises, generators or async await instead of neo-async dependency
-+ Add query parser for mongodb
-+ Argument checker for api rather than hardcoding incoming parameters to collection / record objects
-+ Add interface to models as well as low-level collection objects
