@@ -9,6 +9,7 @@ module.exports = {
         base: 'exampleCollection',
         jsonSchema: 'v4',
         name: 'rec',
+        rids: ['invalid'],
         version: 1
 
     },

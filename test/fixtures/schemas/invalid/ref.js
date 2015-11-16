@@ -8,6 +8,7 @@ module.exports = {
         type: 'record',
         base: 'example',
         jsonSchema: 'v4',
+        rids: ['control'],
         name: 'rec',
         version: 1
 

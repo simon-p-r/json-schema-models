@@ -9,6 +9,7 @@ module.exports = {
         base: 'testCollection',
         jsonSchema: 'v4',
         name: 'testRec',
+        rids: ['lookup'],
         version: 1
 
     },

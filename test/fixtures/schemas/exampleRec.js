@@ -10,6 +10,7 @@ module.exports = {
         jsonSchema: 'v4',
         name: 'exampleRec',
         version: 1,
+        rids: ['lookup'],
         keys: [{
             name: 'sid',
             flds: {
