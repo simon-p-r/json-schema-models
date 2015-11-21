@@ -12,8 +12,7 @@ const Formats = require('./fixtures/formats.js');
 const InvalidDef = require('./fixtures/schemas/invalid/def.js');
 const InvalidRec = require('./fixtures/schemas/invalid/rec.js');
 const InvalidRef = require('./fixtures/schemas/invalid/ref.js');
-const ZSchema = require('z-schema');
-const Validator = new ZSchema();
+
 
 // Set-up lab
 const lab = exports.lab = Lab.script();
@@ -40,9 +39,7 @@ describe('Manager', () => {
             },
             schema: {
                 formats: Formats
-            },
-            validator: Validator,
-            zSchema: ZSchema
+            }
         });
         done();
     });
@@ -134,9 +131,7 @@ describe('Manager', () => {
             },
             schema: {
                 formats: Formats
-            },
-            validator: Validator,
-            zSchema: ZSchema
+            }
         });
         datastore.schema.addSchemas(Schemas);
         datastore.start((err, result) => {
