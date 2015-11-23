@@ -6,7 +6,7 @@ module.exports = {
     metaSchema: {
         description: 'test record schema',
         type: 'record',
-        base: 'testCollection',
+        base: 'lookup',
         jsonSchema: 'v4',
         name: 'testRec',
         rids: ['lookup'],

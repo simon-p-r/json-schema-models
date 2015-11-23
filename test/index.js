@@ -143,6 +143,33 @@ describe('Manager', () => {
         });
     });
 
+    it('should return an error from start method when a createSchemas returns an error', (done) => {
+
+        const Invalid = Hoek.clone(Schemas);
+        Invalid[1].metaSchema.base = 'invalid';
+        const datastore = new Manager({
+            mongo: {
+                name: 'test_db',
+                url: 'mongodb://localhost:27017',
+                options: {
+
+                },
+                collections: Collections
+            },
+            schema: {
+                formats: Formats
+            }
+        });
+        datastore.schema.addSchemas(Invalid);
+        datastore.start((err, result) => {
+
+            expect(err).to.exist();
+            expect(err.toString()).to.contain('Base name for record schema');
+            done();
+
+        });
+    });
+
 
     it('should return an error if no record schemas have been loaded by addSchemas method', (done) => {
 
