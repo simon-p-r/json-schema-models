@@ -19,7 +19,12 @@ options object must contain the following properties
 
 + schema
    + formats - an object with keys being name of format to register and value being the custom function to register for z-schema validation
-+ validator - an object created by z-schema constructor function
+
+##### .addSchemas(schemas)
+
++ method to addSchemas prior to connecting to database, schemas can be an object with keys being records and definitions and the values being key of schema name and value the schema object to loaded
+
+ 
 
 ##### .start(callback)
 
@@ -37,7 +42,7 @@ options object must contain the following properties
 
 ##### .buildIndexes(callback)
 
-+ method to build indexes based on schema definition
++ method to build indexes based on schema definitions
 
     ##### params
     + callback with err signature

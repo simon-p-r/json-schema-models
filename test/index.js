@@ -64,7 +64,7 @@ describe('Manager', () => {
     it('should return an error when opened against invalid port', (done) => {
 
         manager.settings.mongo.url = 'mongodb://localhost:27018';
-        manager.schema.addSchemas(Schemas);
+        manager.addSchemas(Schemas);
         manager.start((err, result) => {
 
             expect(err).to.exist();
@@ -93,8 +93,8 @@ describe('Manager', () => {
 
     it('should return an error when a defintion schema is not valid with z-schema', (done) => {
 
-        manager.schema.addSchemas(Schemas);
-        manager.schema.addSchemas([InvalidDef]);
+        manager.addSchemas(Schemas);
+        manager.addSchemas([InvalidDef]);
         manager.start((err, result) => {
 
             expect(err).to.exist();
@@ -106,7 +106,7 @@ describe('Manager', () => {
 
     it('should return an error from start method when a schema compile throws an error', (done) => {
 
-        manager.schema.addSchemas([InvalidRef]);
+        manager.addSchemas([InvalidRef]);
         manager.start((err, result) => {
 
             expect(err).to.exist();
@@ -133,7 +133,7 @@ describe('Manager', () => {
                 formats: Formats
             }
         });
-        datastore.schema.addSchemas(Schemas);
+        datastore.addSchemas(Schemas);
         datastore.start((err, result) => {
 
             expect(err).to.exist();
@@ -160,7 +160,7 @@ describe('Manager', () => {
                 formats: Formats
             }
         });
-        datastore.schema.addSchemas(Invalid);
+        datastore.addSchemas(Invalid);
         datastore.start((err, result) => {
 
             expect(err).to.exist();
@@ -183,8 +183,8 @@ describe('Manager', () => {
 
     it('should return an error from start method when a record schema is not valid with z-schema', (done) => {
 
-        manager.schema.addSchemas(Schemas);
-        manager.schema.addSchemas([InvalidRec]);
+        manager.addSchemas(Schemas);
+        manager.addSchemas([InvalidRec]);
         manager.start((err, result) => {
 
             expect(err).to.exist();
@@ -195,8 +195,8 @@ describe('Manager', () => {
 
     it('should return an error if defintion sub-schemas are not valid with z-schema', (done) => {
 
-        manager.schema.addSchemas(Schemas);
-        manager.schema.addSchemas([InvalidDef]);
+        manager.addSchemas(Schemas);
+        manager.addSchemas([InvalidDef]);
         manager.start((err, result) => {
 
             expect(err).to.exist();
@@ -205,9 +205,27 @@ describe('Manager', () => {
         });
     });
 
+    it('should add custom formats via addFormats method', (done) => {
+
+        manager.addSchemas(Schemas);
+        manager.addFormats({
+            customFormat: function (string) {
+
+                return true;
+            }
+        });
+        manager.start((err, result) => {
+
+            expect(err).not.to.exist();
+            expect(manager.schema.formats.customFormat).to.be.a.function();
+            manager.stop(done);
+
+        });
+    });
+
     it('should successfully start db and return collections, records and db objects', (done) => {
 
-        manager.schema.addSchemas(Schemas);
+        manager.addSchemas(Schemas);
         manager.start((err, result) => {
 
             expect(err).not.to.exist();
@@ -222,7 +240,7 @@ describe('Manager', () => {
 
     it('should clean up when stop method is called', (done) => {
 
-        manager.schema.addSchemas(Schemas);
+        manager.addSchemas(Schemas);
         manager.start((err, result) => {
 
             expect(err).not.to.exist();
@@ -233,7 +251,7 @@ describe('Manager', () => {
 
     it('should expose a buildIndexes method and successfully build indexes with mongodb', (done) => {
 
-        manager.schema.addSchemas(Schemas);
+        manager.addSchemas(Schemas);
         manager.start((err, result) => {
 
             expect(err).not.to.exist();
@@ -251,7 +269,7 @@ describe('Manager', () => {
         invalid[1].indexes[2] = Collections[1].indexes[0];
         invalid[1].indexes[2].options.unique = false;
         manager.collections = invalid;
-        manager.schema.addSchemas(Schemas);
+        manager.addSchemas(Schemas);
         manager.start((err, result) => {
 
             expect(err).not.to.exist();
