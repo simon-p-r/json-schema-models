@@ -1,6 +1,6 @@
 {
   "name": "json-schema-models",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
@@ -19,12 +19,12 @@
   "dependencies": {
     "basic-utils": "^1.0.0",
     "hoek": "^3.0.1",
-    "joi": "^7.0.0",
+    "joi": "^7.0.1",
     "mongodb": "^2.0.47",
     "neo-async": "^1.6.0",
     "wadofgum": "^4.1.0",
     "wadofgum-json-schema": "^0.4.1",
-    "wadofgum-mongodb": "^0.3.0",
+    "wadofgum-mongodb": "^0.4.0",
     "yajsv": "^0.6.0",
     "z-schema": "^3.16.0"
   },
