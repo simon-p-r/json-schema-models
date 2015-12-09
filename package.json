@@ -1,6 +1,6 @@
 {
   "name": "json-schema-models",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "wadofgum": "^4.1.0",
     "wadofgum-json-schema": "^0.4.1",
     "wadofgum-mongodb": "^0.4.0",
-    "yajsv": "^0.6.0",
+    "yajsv": "^0.6.1",
     "z-schema": "^3.16.1"
   },
   "devDependencies": {
