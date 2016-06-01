@@ -1,11 +1,12 @@
 {
   "name": "json-schema-models",
-  "version": "0.5.6",
+  "version": "0.6.0",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
     "pretest": "mongo localhost:27017/wadofgum_db ./scripts/mongo.js",
-    "test": "lab -a code -v -t 100 -L"
+    "test": "lab -a code -v -t 100 -L",
+    "coveralls": "lab -r lcov | coveralls"
   },
   "engines": {
     "node": ">=4.0.0"
@@ -17,19 +18,19 @@
   "author": "simon-p-r <simon.ricaldone@circabs.com> (https://github.com/simon-p-r)",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "basic-utils": "^1.1.0",
-    "hoek": "^3.0.1",
-    "joi": "^7.0.1",
-    "mongodb": "^2.1.0",
+    "hoek": "^4.0.0",
+    "joi": "^8.4.0",
+    "mongodb": "^2.1.21",
     "neo-async": "^1.7.1",
-    "wadofgum": "^4.1.0",
-    "wadofgum-json-schema": "^0.4.1",
-    "wadofgum-mongodb": "^0.4.0",
-    "yajsv": "^0.6.1",
+    "wadofgum": "^5.1.0",
+    "wadofgum-json-schema": "^1.1.1",
+    "wadofgum-mongodb": "^1.1.1",
+    "yajsv": "^0.7.0",
     "z-schema": "^3.16.1"
   },
   "devDependencies": {
-    "code": "^2.0.1",
-    "lab": "^8.0.0"
+    "code": "^3.0.0",
+    "coveralls": "^2.11.9",
+    "lab": "^10.7.1"
   }
 }

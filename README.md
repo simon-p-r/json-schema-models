@@ -1,4 +1,6 @@
-# json-schema-models [![build status](https://travis-ci.org/simon-p-r/json-schema-models.svg?branch=master)](https://travis-ci.org/simon-p-r/json-schema-models)
+# json-schema-models
+[![build status](https://travis-ci.org/simon-p-r/json-schema-models.svg?branch=master)](https://travis-ci.org/simon-p-r/json-schema-models)
+[![Coverage Status](https://coveralls.io/repos/github/simon-p-r/json-schema-models/badge.svg?branch=master)](https://coveralls.io/github/simon-p-r/json-schema-models?branch=master)
 
 Data models for mongodb using json schema to define polymorphic schemas to be used with mongodb.
 Internally modules use z-schema for json validation and mongodb native driver to connect to db.
@@ -24,7 +26,7 @@ options object must contain the following properties
 
 + method to addSchemas prior to connecting to database, schemas can be an object with keys being records and definitions and the values being key of schema name and value the schema object to loaded
 
- 
+
 
 ##### .start(callback)
 
