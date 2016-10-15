@@ -1,6 +1,6 @@
 {
   "name": "json-schema-models",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {

@@ -3,7 +3,6 @@
 [![Current Version](https://img.shields.io/npm/v/json-schema-models.svg?maxAge=1000)](https://www.npmjs.com/package/json-schema-models)
 [![dependency Status](https://img.shields.io/david/simon-p-r/json-schema-models.svg?maxAge=1000)](https://david-dm.org/simon-p-r/json-schema-models)
 [![devDependency Status](https://img.shields.io/david/dev/simon-p-r/json-schema-models.svg?maxAge=1000)](https://david-dm.org/simon-p-r/json-schema-models?type=dev)
-[![Build Status](https://travis-ci.org/simon-p-r/json-schema-models.svg?branch=master)](https://travis-ci.org/simon-p-r/json-schema-models)
 [![Coveralls](https://img.shields.io/coveralls/simon-p-r/json-schema-models.svg?maxAge=1000)](https://coveralls.io/github/simon-p-r/json-schema-models)
 
 
