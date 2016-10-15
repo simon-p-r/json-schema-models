@@ -69,7 +69,7 @@ describe('Manager', () => {
 
             expect(err).to.exist();
             expect(err.name).to.contain('MongoError');
-            expect(err.message).to.contain('connect ECONNREFUSED');
+            expect(err.message).to.contain('failed to connect to server');
             done();
         });
 
@@ -176,7 +176,7 @@ describe('Manager', () => {
         manager.start((err, result) => {
 
             expect(err).to.exist();
-            expect(err).to.contain('No record schemas loaded');
+            expect(err.message).to.contain('No record schemas loaded');
             done();
         });
     });
@@ -276,7 +276,7 @@ describe('Manager', () => {
             manager.buildIndexes((err) => {
 
                 expect(err).to.exist();
-                expect(err).to.contain('Cannot create collection indices');
+                expect(err.message).to.contain('Cannot create collection indices');
                 manager.stop(done);
             });
         });

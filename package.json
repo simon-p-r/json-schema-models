@@ -1,6 +1,6 @@
 {
   "name": "json-schema-models",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "json schema based models",
   "main": "lib/index.js",
   "scripts": {
@@ -18,19 +18,19 @@
   "author": "simon-p-r <simon.ricaldone@circabs.com> (https://github.com/simon-p-r)",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "hoek": "^4.0.0",
-    "joi": "^8.4.0",
-    "mongodb": "^2.1.21",
-    "neo-async": "^1.7.1",
+    "hoek": "^4.1.0",
+    "joi": "^9.1.1",
+    "mongodb": "^2.2.10",
+    "neo-async": "^2.0.1",
     "wadofgum": "^4.1.0",
     "wadofgum-json-schema": "^1.2.0",
     "wadofgum-mongodb": "^1.2.0",
-    "yajsv": "^0.7.0",
-    "z-schema": "^3.16.1"
+    "yajsv": "^0.7.1",
+    "z-schema": "^3.18.0"
   },
   "devDependencies": {
-    "code": "^3.0.0",
-    "coveralls": "^2.11.9",
-    "lab": "^10.7.1"
+    "code": "^4.0.0",
+    "coveralls": "^2.11.14",
+    "lab": "^11.1.0"
   }
 }
